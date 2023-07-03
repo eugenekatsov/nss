@@ -1,12 +1,13 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
+import { createUser, getUser, updateUser, deleteUser, healthz } from './src/api-handlers';
 
 const app = express();
-const port = 3000;
+const port = 80;
 
 app.use(express.json());
 
 // Custom middleware to verify the name is a string
-const verifyNameIsString = (req: Request, res: Response, next: NextFunction) => {
+const verifyNameIsString = (req: Request, res: Response, next: any) => {
   const { name } = req.body;
   if (typeof name === 'string') {
     next(); // Name is a string, proceed to the next middleware or route handler
@@ -15,18 +16,14 @@ const verifyNameIsString = (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-// Define your API routes
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, World!');
-});
-
-app.post('/api/users', verifyNameIsString, (req: Request, res: Response) => {
-  const { name, email } = req.body;
-  // Save the user to the database or perform any other actions
-  res.status(201).json({ message: 'User created successfully', name, email });
-});
+app.post('/users', verifyNameIsString, createUser);
+app.get('/users/:id', getUser);
+app.put('/users/:id', verifyNameIsString, updateUser);
+app.delete('/users/:id', deleteUser);
+app.get('/healthz', healthz);
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
