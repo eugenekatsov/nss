@@ -3,7 +3,7 @@ Node sample service
 
 A toy api for local experimenting with an express server running inside a minikube pod with open telemetry tracing written to a text file.
 
-This is simply a node version of the gss backend. To make it work you'll need to change the internal DNS name in the [frontend](https://github.com/eugenekatsov/gss-fe) in nginx.conf to `nss`
+This is simply a node version of the gss backend. The accompanying frontend is [here](https://github.com/eugenekatsov/gss-fe). To make it work you'll need to change the internal DNS name in nginx.conf to `nss` in the frontend.
 
 ## Setup
 
